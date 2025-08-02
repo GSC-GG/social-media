@@ -6,15 +6,15 @@ public class Like {
 	private int id;
 	private Post post;
 	private User user;
-	private boolean on;			//1 on, 0 removed
+	private boolean removed;			//0 on, 1 removed
 	private Timestamp creation_date;
 	
-	public Like(int id, Post post, User user, boolean on, Timestamp creation_date) {
+	public Like(int id, Post post, User user, boolean removed, Timestamp creation_date) {
 		super();
 		this.id = id;
 		this.post = post;
 		this.user = user;
-		this.on = on;
+		this.removed = removed;
 		this.creation_date = creation_date;
 	}
 	
@@ -36,11 +36,11 @@ public class Like {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public boolean isOn() {
-		return on;
+	public boolean isRemoved() {
+		return removed;
 	}
-	public void setStatus(boolean on) {
-		this.on = on;
+	public void setStatus(boolean removed) {
+		this.removed = !removed;
 	}
 	public Timestamp getCreation_date() {
 		return creation_date;

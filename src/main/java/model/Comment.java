@@ -6,14 +6,14 @@ public abstract class Comment {
 	protected int id;
 	protected String content;
 	protected User user;
-	protected boolean on;			//1 on, 0 removed
+	protected boolean removed;			//0 on, 1 removed
 	protected Timestamp creation_date;
 	
-	public Comment(int id, String content, User user, boolean on, Timestamp creation_date) {
+	public Comment(int id, String content, User user, boolean removed, Timestamp creation_date) {
 		this.id = id;
 		this.content = content;
 		this.user = user;
-		this.on = on;
+		this.removed = removed;
 		this.creation_date = creation_date;
 	}
 	
@@ -35,11 +35,11 @@ public abstract class Comment {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public boolean isOn() {
-		return on;
+	public boolean isRemoved() {
+		return removed;
 	}
-	public void setStatus(boolean on) {
-		this.on = on;
+	public void setStatus(boolean posted) {
+		this.removed = !removed;
 	}
 	public Timestamp getCreation_date() {
 		return creation_date;

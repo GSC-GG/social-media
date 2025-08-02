@@ -5,9 +5,9 @@ import java.sql.Timestamp;
 public class UserReport extends Report {
 	private User user;
 
-	public UserReport(int id, String content, User moderator, String status, Timestamp creation_date,
+	public UserReport(int id, String content, User reporter, User moderator, String status, String result, Timestamp creation_date,
 			Timestamp atualization_date, User user) {
-		super(id, content, moderator, status, creation_date, atualization_date);
+		super(id, content, reporter, moderator, status, result, creation_date, atualization_date);
 		this.user = user;
 	}
 

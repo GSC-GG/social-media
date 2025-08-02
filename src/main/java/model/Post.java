@@ -10,6 +10,7 @@ public class Post {
 	private User user;
 	private String status;	
 	private Timestamp creation_date;
+	private Timestamp edition_date;
 	
 	public Post(int id, String content, String annex, User user, String status, Timestamp creation_date) {
 		this.id = id;
@@ -65,5 +66,11 @@ public class Post {
 	/*
 	 * public void setCreation_date(Timestamp creation_date) { this.creation_date =
 	 * creation_date; }
-	 */	
+	 */
+	public Timestamp getEdition_date() {
+		return edition_date;
+	}
+	public void setEdition_date(Timestamp edition_date) {
+		this.edition_date = edition_date;
+	}	
 }

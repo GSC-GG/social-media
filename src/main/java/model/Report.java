@@ -6,16 +6,20 @@ import java.util.ArrayList;
 public abstract class Report {
 	protected int id;
 	protected String content;
+	protected User reporter;
 	protected User moderator;
 	protected String status;
+	protected String result;
 	protected Timestamp creation_date;
 	protected Timestamp atualization_date;
 	
-	public Report(int id, String content, User moderator, String status, Timestamp creation_date, Timestamp atualization_date) {
+	public Report(int id, String content, User reporter, User moderator, String status, String result, Timestamp creation_date, Timestamp atualization_date) {
 		this.id = id;
 		this.content = content;
+		this.reporter = reporter;
 		this.moderator = moderator;
 		this.status = status;
+		this.result = result;
 		this.creation_date = creation_date;
 		this.setAtualization_date(atualization_date);
 	}
@@ -31,6 +35,12 @@ public abstract class Report {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public User getReporter() {
+		return reporter;
+	}
+	public void Reporter(User reporter) {
+		this.reporter = reporter;
 	}
 	public User getModerator() {
 		return moderator;
@@ -52,6 +62,12 @@ public abstract class Report {
 		} else {
 			throw new IllegalArgumentException("Invalid status attribution (only \"pending\", \"archived\" or \"concluded\"");
 		}
+	}
+	public String getResult() {
+		return result;
+	}
+	public void setResult(String result) {
+		this.result = result;
 	}
 	public Timestamp getCreation_date() {
 		return creation_date;
