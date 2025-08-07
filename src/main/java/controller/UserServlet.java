@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +19,7 @@ import model.User;
 /**
  * Servlet implementation class UserServlet
  */
-@WebServlet("/users")
+@WebServlet("/users/*")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -38,15 +39,24 @@ public class UserServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		
 		try {
-			String action = request.getParameter("action");
+			String id = request.getPathInfo().substring(1);
 			UserDAO dao = new UserDAO();
+			Object json;
 			
-			switch(action) {
-			case "listAll":
-				ArrayList<User> users = dao.listAll();
-				JSONArray json = new JSONArray(users);
-				response.getWriter().print(json);
+			if (id == null) {
+				ArrayList<User> users = null;
+				users = dao.list(
+						request.getParameter("name"),
+						request.getParameter("level"),
+						request.getParameter("status")
+						);
+				json = new JSONArray(users);
+			} else {
+				User user = dao.select(Integer.parseInt(id));
+				json = new JSONObject(user);
 			}
+			response.getWriter().print(json);
+			response.getWriter().print("\n\n"+request.getQueryString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

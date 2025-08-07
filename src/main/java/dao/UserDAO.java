@@ -49,7 +49,7 @@ public class UserDAO extends AbstractDAO {
         stmt.close();
 	}
 	
-	public User selectFromId(int id) throws SQLException {
+	public User select(int id) throws SQLException {
 		String sql = "SELECT * FROM users WHERE id = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setInt(1, id);
@@ -63,9 +63,46 @@ public class UserDAO extends AbstractDAO {
         return user;
 	}
 	
-	public ArrayList<User> listAll() throws SQLException {
+	private String setStatement(boolean args) {
+		return !args ? "WHERE " : ", ";
+	}
+	private String setInterrogation(boolean args) {
+		return !args ? " ?" : "";
+	}
+	
+	public ArrayList<User> list(String name, String level, String status) throws SQLException {
 		String sql = "SELECT * FROM users";
         PreparedStatement stmt = conn.prepareStatement(sql);
+		boolean manyArgs = false;
+		boolean interrogation = false;
+		
+		String statement = "";
+		if (name != null) {
+			statement = setStatement(manyArgs);
+			sql += setInterrogation(interrogation);
+			interrogation = true;
+			manyArgs = true;
+			statement += "name = " + name;
+		}
+
+		if (level != null) {
+			statement = setStatement(manyArgs);
+			sql += setInterrogation(interrogation);
+			interrogation = true;
+			manyArgs = true;
+			statement += "level = " + level;
+		}
+
+		if (status != null) {
+			statement = setStatement(manyArgs);
+			manyArgs = true;
+			statement += "status = " + status;
+		}
+
+		if (interrogation)
+			stmt.setString(1, statement);
+
+		System.out.println(stmt.toString());
         ResultSet rs = stmt.executeQuery();
         
         ArrayList<User> list = new ArrayList<User>();
@@ -75,74 +112,7 @@ public class UserDAO extends AbstractDAO {
         if (rs != null) {
         	while (rs.next()) {
         		id = rs.getInt("id");
-        		user = selectFromId(id);
-        		list.add(user);
-        	}
-        	return list;
-        } else {
-        	return null;
-        }
-	}
-	
-	public ArrayList<User> listByName(String name) throws SQLException {
-		String sql = "SELECT * FROM users WHERE username LIKE %?% OR nickname LIKE %?%";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setString(1, name);
-        stmt.setString(2, name);
-        ResultSet rs = stmt.executeQuery();
-        
-        ArrayList<User> list = new ArrayList<User>();
-        User user = null;
-        int id;
-
-        if (rs != null) {
-        	while (rs.next()) {
-        		id = rs.getInt("id");
-        		user = selectFromId(id);
-        		list.add(user);
-        	}
-        	return list;
-        } else {
-        	return null;
-        }
-	}
-	
-	public ArrayList<User> listByLevel(String level) throws SQLException {
-		String sql = "SELECT * FROM users WHERE level = ?";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setString(1, level);
-        ResultSet rs = stmt.executeQuery();
-        
-        ArrayList<User> list = new ArrayList<User>();
-        User user = null;
-        int id;
-
-        if (rs != null) {
-        	while (rs.next()) {
-        		id = rs.getInt("id");
-        		user = selectFromId(id);
-        		list.add(user);
-        	}
-        	return list;
-        } else {
-        	return null;
-        }
-	}
-	
-	public ArrayList<User> listByStatus(String status) throws SQLException {
-		String sql = "SELECT * FROM users WHERE level = ?";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setString(1, status);
-        ResultSet rs = stmt.executeQuery();
-        
-        ArrayList<User> list = new ArrayList<User>();
-        User user = null;
-        int id;
-
-        if (rs != null) {
-        	while (rs.next()) {
-        		id = rs.getInt("id");
-        		user = selectFromId(id);
+        		user = select(id);
         		list.add(user);
         	}
         	return list;
@@ -180,7 +150,7 @@ public class UserDAO extends AbstractDAO {
         if (rs != null) {
 			while (rs.next()) {
 				idFollowed = rs.getInt("idFollowed");
-				followed = selectFromId(idFollowed);
+				followed = select(idFollowed);
 				list.add(followed);
 			}
 			return list;
@@ -202,7 +172,7 @@ public class UserDAO extends AbstractDAO {
         if (rs != null) {
 			while (rs.next()) {
 				idFollower = rs.getInt("idFollower");
-				follower = selectFromId(idFollower);
+				follower = select(idFollower);
 				list.add(follower);
 			}
 			return list;
