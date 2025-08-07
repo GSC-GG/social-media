@@ -8,7 +8,7 @@ public abstract class Report {
 	protected String content;
 	protected User reporter;
 	protected User moderator;
-	protected String status;
+	protected String status;			//pending, archived, concluded
 	protected String result;
 	protected Timestamp creation_date;
 	protected Timestamp atualization_date;

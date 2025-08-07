@@ -7,7 +7,7 @@ import database.DBConnection;
 
 public abstract class AbstractDAO {
 
-	protected DBConnection dbConnection;
+	private DBConnection dbConnection;
 	protected Connection conn;
 
 	public AbstractDAO() {}

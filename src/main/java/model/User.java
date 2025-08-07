@@ -19,8 +19,8 @@ public class User {
 	private Timestamp creation_date;
 	
 	public User(int id, String first_name, String last_name, String username, String nickname, String photo,
-			String email, String password, String level, String status, ArrayList<User> followers,
-			ArrayList<User> following, Timestamp creation_date) {
+			String email, String password, String level, String status,
+			Timestamp creation_date) {
 		super();
 		this.id = id;
 		this.first_name = first_name;
@@ -30,10 +30,8 @@ public class User {
 		this.photo = photo;
 		this.email = email;
 		this.password = password;
-		this.level = level;
-		this.status = status;
-		this.followers = followers;
-		this.following = following;
+		setLevel(level);
+		setStatus(status);
 		this.creation_date = creation_date;
 	}
 	

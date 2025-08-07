@@ -14,7 +14,7 @@ import dao.Migration;
 /**
  * Servlet implementation class TestController
  */
-@WebServlet("/TestController")
+@WebServlet("/test")
 public class TestController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -31,7 +31,7 @@ public class TestController extends HttpServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			Migration migration = new Migration();
+			new Migration();
 			response.getWriter().append("Served at: ").append(request.getContextPath());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

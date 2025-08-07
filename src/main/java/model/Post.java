@@ -8,7 +8,7 @@ public class Post {
 	private String content;
 	private String annex;
 	private User user;
-	private String status;	
+	private String status;			//public, archived, deleted
 	private Timestamp creation_date;
 	private Timestamp edition_date;
 	
@@ -17,7 +17,7 @@ public class Post {
 		this.content = content;
 		this.annex = annex;
 		this.user = user;
-		this.status = status;
+		setStatus(status);
 		this.creation_date = creation_date;
 	}
 	
